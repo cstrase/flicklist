@@ -26,11 +26,11 @@ var api = {
  * the callback function that was passed in
  */
 
-// TODO 1
+// TODO 1 (DONE)
 // this function should accept a second argument, `keywords`
 function discoverMovies(callback, keywords) {
 
-  // TODO 2
+  // TODO 2 (DONE)
   // ask the API for movies related to the keywords that were passed in above
   // HINT: add another key/value pair to the `data` argument below
   // But it's not that easy! You need an ID!
@@ -39,7 +39,7 @@ function discoverMovies(callback, keywords) {
     url: api.root + "/discover/movie",
     data: {
       api_key: api.token,
-      with_keywords: keywords,
+      with_keywords: keywords // remember, the API expects and exact keyword!
     },
     success: function(response) {
       model.browseItems = response.results;
@@ -57,15 +57,15 @@ function discoverMovies(callback, keywords) {
  * the API's response.
  */
 function searchMovies(query, callback) {
-  // TODO 3
+  // TODO 3 (DONE)
   // change the url so that we search for keywords, not movies
 
 
-  // TODO 4
+  // TODO 4 (DONE)
   // when the response comes back, do all the tasks below:
 
 
-  // TODO 4a
+  // TODO 4a (DONE)
   // create a new variable called keywordIDs whose value is an array of all the
   // `.id` values of each of the objects inside reponse.results
   // HINT use the array map function to map over response.results
@@ -78,7 +78,7 @@ function searchMovies(query, callback) {
   // HINT: use the Array join function
 
 
-  // TODO 4c
+  // TODO 4c (DONE)
   // instead of a comma-separated string, we want the ids
   // to be spearated with the pipe "|" character, eg:
   //     "192305|210090|210092|210093"
@@ -100,7 +100,9 @@ function searchMovies(query, callback) {
     },
     success: function(response) {
       console.log(response);
-      var keywordIDs = response.results.map(function (res) { return res.id; })
+      var keywordIDs = response.results.map(function(keywordObj) {
+        return keywordObj.id;
+      });
       var keywordString = keywordIDS.join('|');
       discoverMovies(callback, keywordString);
     }
